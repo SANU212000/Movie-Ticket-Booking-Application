@@ -28,7 +28,7 @@ class SquareWithConnectedBoxes extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromRGBO(10, 2, 2, 0.059), // More visible
+                  Color.fromRGBO(10, 2, 2, 0), // More visible
                   Color.fromRGBO(0, 0, 0, 0),
                 ],
                 stops: [0.0, 1.0],

@@ -5,7 +5,7 @@ class SeatProvider extends ChangeNotifier {
   final int rows = 5;
   final int cols = 8;
   late Box _bookedSeatsBox;
-  Set<String> _selectedSeats = {};
+  final Set<String> _selectedSeats = {};
   String _currentMovie = "";
   String _currentShowTime = "";
 

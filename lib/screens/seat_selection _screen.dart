@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movie_listing_app/model/movie.dart';
 import 'package:movie_listing_app/provider/seat_provider.dart';
-import 'package:movie_listing_app/utils/benled_screen.dart';
+import 'package:movie_listing_app/utils/curved_line.dart';
 import 'package:provider/provider.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
@@ -40,45 +41,104 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
       body: SafeArea(
         child: Column(
           children: [
-            Positioned(
-              top: 40,
-              left: 16,
-              right: 16,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.black54,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
+            Row(
+              children: [
+                Container(
+                  height: 50,
+                  color: Colors.black54,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                SizedBox(width: 12),
+              ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.movie.posterUrl),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.7),
+                        BlendMode.darken,
+                      ),
                     ),
                   ),
-                  SizedBox(width: 12),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.movie.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                 ),
 
-                SizedBox(height: 4),
+                Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          widget.movie.posterUrl,
+                          width: 120,
+                          height: 150,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(width: 16),
 
-                Text(
-                  widget.showTime,
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Movie Title",
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+
+                            Text(
+                              widget.movie.title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
+                              maxLines: 2,
+                            ),
+
+                            SizedBox(height: 8),
+
+                            Text(
+                              "Show Time",
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+
+                            Text(
+                              widget.showTime,
+                              style: TextStyle(
+                                color: Colors.grey[300],
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -93,13 +153,13 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 80),
+            SizedBox(height: 40),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: CurvedLine(),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 60),
 
             Expanded(
               child: GridView.builder(
@@ -138,7 +198,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
                           topRight: Radius.circular(20),
                           bottomLeft: Radius.circular(8),
                           bottomRight: Radius.circular(8),
-                        ), // Adjust curvature
+                        ),
                         boxShadow:
                             isSelected
                                 ? [
@@ -183,10 +243,6 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
                         : () {
                           _showCustomConfirmationDialog(context, seatProvider);
                         },
-                child: Text(
-                  "Confirm Booking",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   foregroundColor: Colors.black,
@@ -195,6 +251,10 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                ),
+                child: Text(
+                  "Confirm Booking",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -223,11 +283,10 @@ void _showCustomConfirmationDialog(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              /// 🎟️ Booking Icon
-              Icon(Icons.confirmation_number, size: 60, color: Colors.amber),
+              Lottie.asset("assets/animated icons/tickets.json", width: 150),
+
               SizedBox(height: 15),
 
-              /// 📢 Confirmation Text
               Text(
                 "Confirm Your Booking",
                 style: TextStyle(
@@ -305,9 +364,11 @@ void _showSuccessDialog(BuildContext context) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.check_circle, size: 60, color: Colors.greenAccent),
               SizedBox(height: 15),
-
+              Lottie.asset(
+                'assets/animated icons/successTick.json',
+                width: 100,
+              ),
               Text(
                 "Booking Successful!",
                 style: TextStyle(

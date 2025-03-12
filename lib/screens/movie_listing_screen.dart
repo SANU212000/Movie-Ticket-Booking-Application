@@ -14,8 +14,8 @@ class MovieListScreen extends StatefulWidget {
 }
 
 class _MovieListScreenState extends State<MovieListScreen> {
-  TextEditingController _searchController = TextEditingController();
-  FocusNode _searchFocusNode = FocusNode();
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -26,18 +26,16 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final movieProvider = Provider.of<MovieProvider>(context);
-    bool isSearching = _searchController.text.isNotEmpty;
-
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.amber.shade600, Colors.black, Colors.black],
+                colors: [Colors.orange, Colors.black, Colors.black],
               ),
             ),
           ),
@@ -45,106 +43,126 @@ class _MovieListScreenState extends State<MovieListScreen> {
             child: Center(child: SquareWithConnectedBoxes(size: 1000)),
           ),
           SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: TextField(
-                    controller: _searchController,
-                    focusNode: _searchFocusNode,
-                    decoration: InputDecoration(
-                      hintText: "Search movies...",
-                      prefixIcon: Icon(Icons.search, color: Colors.white),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[900],
-                    ),
-                    style: TextStyle(color: Colors.white),
-                    onChanged: (query) {
-                      movieProvider.updateSearchQuery(query);
-                    },
-                  ),
-                ),
+            child: Consumer<MovieProvider>(
+              builder: (context, movieProvider, child) {
+                bool isSearching = movieProvider.searchQuery.isNotEmpty;
 
-                if (isSearching)
-                  /// 📜 Search Results List
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: movieProvider.movies.length,
-                      itemBuilder: (context, index) {
-                        final movie = movieProvider.movies[index];
-                        return ListTile(
-                          leading: Image.network(
-                            movie.posterUrl,
-                            width: 50,
-                            fit: BoxFit.cover,
-                            errorBuilder:
-                                (context, error, stackTrace) => Icon(
-                                  Icons.broken_image,
-                                  size: 50,
-                                  color: Colors.grey,
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      expandedHeight: isSearching ? 40 : 420,
+                      pinned: true,
+                      floating: false,
+                      backgroundColor: Colors.transparent,
+                      flexibleSpace:
+                          isSearching
+                              ? null
+                              : FlexibleSpaceBar(
+                                expandedTitleScale: 1,
+                                background: MovieCarousel(
+                                  movies: movieProvider.movies,
+                                  onMovieTap: (movie) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => MovieDetailsScreen(
+                                              movie: movie,
+                                            ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                          ),
-                          title: Text(
-                            movie.title,
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                          subtitle: Text(
-                            "⭐ ${movie.rating} | 📅 ${movie.releaseDate}",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        MovieDetailsScreen(movie: movie),
                               ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  )
-                else
-                  /// 🏠 Default Movie List (Carousel + Genre Categories)
-                  Expanded(
-                    child: Column(
-                      children: [
-                        MovieCarousel(
-                          movies: movieProvider.movies,
-                          onMovieTap: (movie) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        MovieDetailsScreen(movie: movie),
+
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: SizedBox(
+                          height: 70,
+                          child: TextField(
+                            controller: _searchController,
+                            focusNode: _searchFocusNode,
+                            decoration: InputDecoration(
+                              hintText: "Search movies...",
+                              hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: Colors.white,
                               ),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        Expanded(
-                          child: ListView(
-                            children:
-                                movieProvider.moviesByGenre.entries.map((
-                                  entry,
-                                ) {
-                                  return MovieGenreList(
-                                    genre: entry.key,
-                                    movies: entry.value,
-                                  );
-                                }).toList(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.black.withOpacity(0.8),
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                            ),
+                            style: const TextStyle(color: Colors.white),
+                            onChanged: (query) {
+                              movieProvider.updateSearchQuery(query);
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-              ],
+
+                    if (isSearching)
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final movie = movieProvider.movies[index];
+
+                          return ListTile(
+                            leading: Image.network(
+                              movie.posterUrl,
+                              width: 50,
+                              fit: BoxFit.fill,
+                              errorBuilder:
+                                  (context, error, stackTrace) => const Icon(
+                                    Icons.broken_image,
+                                    size: 50,
+                                    color: Colors.grey,
+                                  ),
+                            ),
+                            title: Text(
+                              movie.title,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "⭐ ${movie.rating} | 📅 ${movie.releaseDate}",
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          MovieDetailsScreen(movie: movie),
+                                ),
+                              );
+                            },
+                          );
+                        }, childCount: movieProvider.movies.length),
+                      )
+                    else
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          movieProvider.moviesByGenre.entries.map((entry) {
+                            return MovieGenreList(
+                              genre: entry.key,
+                              movies: entry.value,
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                  ],
+                );
+              },
             ),
           ),
         ],

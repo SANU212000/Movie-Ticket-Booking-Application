@@ -17,9 +17,10 @@ class MovieCarousel extends StatelessWidget {
     return CarouselSlider(
       options: CarouselOptions(
         height: 300,
+        padEnds: true,
         autoPlay: true,
         enlargeCenterPage: true,
-        aspectRatio: 9 / 16,
+        aspectRatio: 16 / 9,
         viewportFraction: 0.5,
       ),
       items:
