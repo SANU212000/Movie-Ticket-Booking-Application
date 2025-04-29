@@ -20,7 +20,9 @@ class MovieProvider extends ChangeNotifier {
     for (var movie in _movies) {
       if (movie.posterUrl.isNotEmpty) {
         final image = Image.network(movie.posterUrl).image;
-        await precacheImage(image, context);
+        if (context.mounted) {
+          await precacheImage(image, context);
+        }
       }
     }
 

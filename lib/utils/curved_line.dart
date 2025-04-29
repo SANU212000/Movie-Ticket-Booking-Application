@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class CurvedLine extends StatelessWidget {
+  const CurvedLine({super.key});
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -16,7 +17,7 @@ class CurvedLinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint glowPaint =
         Paint()
-          ..color = Colors.white.withOpacity(0.4)
+          ..color = Colors.white.withValues(alpha: 0.4)
           ..maskFilter = MaskFilter.blur(BlurStyle.normal, 8)
           ..strokeWidth = 8
           ..style = PaintingStyle.stroke;

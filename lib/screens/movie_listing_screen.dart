@@ -10,10 +10,10 @@ class MovieListScreen extends StatefulWidget {
   const MovieListScreen({super.key});
 
   @override
-  _MovieListScreenState createState() => _MovieListScreenState();
+  MovieListScreenState createState() => MovieListScreenState();
 }
 
-class _MovieListScreenState extends State<MovieListScreen> {
+class MovieListScreenState extends State<MovieListScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
@@ -28,6 +28,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+
       body: Stack(
         children: [
           Container(
@@ -67,7 +68,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                                       MaterialPageRoute(
                                         builder:
                                             (context) => MovieDetailsScreen(
-                                              movie: movie,
+                                              movieId: movie.id,
                                             ),
                                       ),
                                     );
@@ -94,7 +95,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor: Colors.black.withOpacity(0.8),
+                              fillColor: Colors.black12,
                               contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10,
                               ),
@@ -142,7 +143,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                                 MaterialPageRoute(
                                   builder:
                                       (context) =>
-                                          MovieDetailsScreen(movie: movie),
+                                          MovieDetailsScreen(movieId: movie.id),
                                 ),
                               );
                             },

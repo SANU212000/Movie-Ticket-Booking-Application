@@ -1,12 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_listing_app/model/movie.dart';
-import 'package:movie_listing_app/screens/seat_selection%20_screen.dart';
+import 'package:movie_listing_app/screens/seatselection%20screen.dart';
+import 'package:movie_listing_app/services/movie_data.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
-  final Movie movie;
+  // final Movie movie;
+  // ignore: prefer_typing_uninitialized_variables
+  final movieId;
 
-  const MovieDetailsScreen({super.key, required this.movie});
+  const MovieDetailsScreen({super.key, required this.movieId});
 
   void _selectShowTime(BuildContext context) {
     showModalBottomSheet(
@@ -110,12 +114,15 @@ class MovieDetailsScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         tileColor: Colors.grey[850],
         hoverColor: Colors.grey[800],
-        splashColor: Colors.amber.withOpacity(0.3),
+        splashColor: Colors.amber.withValues(alpha: 0.3),
       ),
     );
   }
 
   void _navigateToSeatSelection(BuildContext context, String showTime) {
+    final movie = LocalMovieRepository().getMovies().firstWhere(
+      (movie) => movie.id == movieId,
+    );
     Navigator.pop(context);
     Navigator.push(
       context,
@@ -128,6 +135,9 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final movie = LocalMovieRepository().getMovies().firstWhere(
+      (movie) => movie.id == movieId,
+    );
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -146,18 +156,20 @@ class MovieDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            Positioned(
-              top: 40,
-              left: 16,
-              child: CircleAvatar(
-                backgroundColor: Colors.black54,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-            ),
-
+            // Positioned(
+            //   top: 40,
+            //   left: 16,
+            //   child: CircleAvatar(
+            //     backgroundColor: Colors.black54,
+            //     child: IconButton(
+            //       icon: Icon(Icons.arrow_back, color: Colors.white),
+            //       onPressed: () {
+            //         Navigator.pop(context);
+            //         // GoRouter.of(context).go('/movieListScreen');
+            //       },
+            //     ),
+            //   ),
+            // ),
             DraggableScrollableSheet(
               initialChildSize: 0.4,
               minChildSize: 0.4,
@@ -236,7 +248,6 @@ class MovieDetailsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            /// 🎬 **Director**
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,7 +302,7 @@ class MovieDetailsScreen extends StatelessWidget {
             Positioned(
               bottom: 20,
               left: 30,
-              right: 30,
+              right: 100,
               child: ElevatedButton.icon(
                 onPressed: () => _selectShowTime(context),
                 icon: Icon(Icons.movie, color: Colors.black),
@@ -306,11 +317,55 @@ class MovieDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
+            Positioned(
+              bottom: 20,
+              left: 320,
+              right: 30,
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () => shareAppLink(context, movie),
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade500,
+                    foregroundColor: Colors.black,
+                    padding: EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.ios_share_outlined,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+// void rotationIcon(BuildContext context, AnimationController controller) {
+//   if (controller.isCompleted) {
+//     controller.reverse();
+//   } else {
+//     controller.forward();
+//   }
+// }
+
+void shareAppLink(BuildContext context, Movie movie) {
+  final String appLink = "https://movielisting.com/movieDetailsScreen";
+  final RenderBox box = context.findRenderObject() as RenderBox;
+
+  // ignore: deprecated_member_use
+  Share.share(
+    "Check out this amazing Movie Listing App:$appLink/${movie.id}",
+    subject: "Movie Listing App",
+    sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+  );
 }
 
 Widget _buildUserScoreChart(dynamic movie) {

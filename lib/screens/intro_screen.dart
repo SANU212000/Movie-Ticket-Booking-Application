@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_listing_app/utils/intro_screen_drawing.dart';
 import 'package:provider/provider.dart';
-import 'package:movie_listing_app/screens/movie_listing_screen.dart';
 import 'package:movie_listing_app/provider/movie_provider.dart';
 import 'package:movie_listing_app/utils/squre_box.dart';
 
@@ -12,6 +12,7 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -19,16 +20,25 @@ class _SplashScreenState extends State<SplashScreen> {
   double _opacity = 0;
   double _textPosition = 50;
   double _boxPosition = -100;
-  double _whiteOverlayOpacity = 0.0; // Overlay opacity
+  double _whiteOverlayOpacity = 0.0;
   final double _arcTop = 1;
   bool _showLottie = false;
-
+  bool _isFinalColor = false;
   @override
   void initState() {
     super.initState();
     _showLottieWithDelay();
     _startAnimations();
     _loadDataAndNavigate();
+    _startGradientAnimation();
+  }
+
+  void _startGradientAnimation() {
+    Future.delayed(const Duration(milliseconds: 800), () {
+      setState(() {
+        _isFinalColor = true;
+      });
+    });
   }
 
   void _showLottieWithDelay() {
@@ -40,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startAnimations() {
-    Future.delayed(const Duration(milliseconds: 400), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         _opacity = 1.0;
         _textPosition = 0;
@@ -72,31 +82,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
         await Future.delayed(const Duration(milliseconds: 300));
 
-        // 🔥 Animate white overlay before navigating
         setState(() {
           _whiteOverlayOpacity = 1.0;
         });
 
         await Future.delayed(const Duration(milliseconds: 500));
 
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder:
-                (context, animation, secondaryAnimation) =>
-                    const MovieListScreen(),
-            transitionsBuilder: (
-              context,
-              animation,
-              secondaryAnimation,
-              child,
-            ) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-          ),
-        );
+              // ignore: use_build_context_synchronously
+              context.go('/movieListScreen'); // Or context.push('/movieListScreen') if you prefer push.
+
       }
     } catch (e) {
+      // ignore: avoid_print
       print("Error loading data: $e");
     }
   }
@@ -170,9 +167,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   const SizedBox(height: 20),
                   if (_showLottie)
                     AnimatedOpacity(
-                      duration: const Duration(
-                        milliseconds: 1000,
-                      ), // Fade-in effect
+                      duration: const Duration(milliseconds: 1000),
                       opacity: 1,
                       child: Lottie.asset(
                         "assets/animated icons/Loading.json",
@@ -186,10 +181,22 @@ class _SplashScreenState extends State<SplashScreen> {
           AnimatedOpacity(
             duration: const Duration(milliseconds: 500),
             opacity: _whiteOverlayOpacity,
-            child: Container(
+            child: AnimatedContainer(
+              duration: const Duration(seconds: 2),
+              onEnd: () {},
               width: double.infinity,
               height: double.infinity,
-              color: Colors.white,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+
+                  end: Alignment.bottomCenter,
+                  colors:
+                      _isFinalColor
+                          ? [Colors.orange, Colors.black, Colors.black]
+                          : [Colors.orange, Colors.black, Colors.black],
+                ),
+              ),
             ),
           ),
         ],

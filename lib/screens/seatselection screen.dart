@@ -1,31 +1,35 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+
 import 'package:movie_listing_app/model/movie.dart';
 import 'package:movie_listing_app/provider/seat_provider.dart';
 import 'package:movie_listing_app/utils/curved_line.dart';
-import 'package:provider/provider.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
   final Movie movie;
   final String showTime;
 
   const SeatSelectionScreen({
-    Key? key,
+    super.key,
     required this.movie,
     required this.showTime,
-  }) : super(key: key);
+  });
 
   @override
-  _SeatSelectionScreenState createState() => _SeatSelectionScreenState();
+  SeatSelectionScreenState createState() => SeatSelectionScreenState();
 }
 
-class _SeatSelectionScreenState extends State<SeatSelectionScreen>
+class SeatSelectionScreenState extends State<SeatSelectionScreen>
     with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       Provider.of<SeatProvider>(
+        // ignore: use_build_context_synchronously
         context,
         listen: false,
       ).setMovieAndShowTime(widget.movie.title, widget.showTime);
@@ -64,7 +68,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
                       image: NetworkImage(widget.movie.posterUrl),
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.7),
+                        Colors.black.withValues(alpha: 0.7),
                         BlendMode.darken,
                       ),
                     ),

@@ -13,11 +13,13 @@ class SquareWithConnectedBoxes extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.001), // Make it slightly visible
+          color: Colors.white.withValues(alpha: 0.001),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             width: 1.3,
-            color: Colors.white.withOpacity(0.1), // Make border more visible
+            color: Colors.white.withValues(
+              alpha: 0.1,
+            ), // Make border more visible
           ),
         ),
         child: ClipRRect(
@@ -46,8 +48,8 @@ class SquareWithConnectedBoxes extends StatelessWidget {
                 return Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.white.withOpacity(
-                        0.08,
+                      color: Colors.white.withValues(
+                        alpha: 0.08,
                       ), // More visible lines
                       width: 0.8,
                     ),

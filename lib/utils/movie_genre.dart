@@ -6,8 +6,7 @@ class MovieGenreList extends StatelessWidget {
   final String genre;
   final List<Movie> movies;
 
-  const MovieGenreList({Key? key, required this.genre, required this.movies})
-    : super(key: key);
+  const MovieGenreList({super.key, required this.genre, required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,8 @@ class MovieGenreList extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MovieDetailsScreen(movie: movie),
+                        builder:
+                            (context) => MovieDetailsScreen(movieId: movie.id),
                       ),
                     );
                   },

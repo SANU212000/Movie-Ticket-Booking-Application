@@ -4,6 +4,7 @@ class LocalMovieRepository {
   List<Movie> getMovies() {
     return [
       Movie(
+        id: 1,
         title: "Interstellar",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
@@ -20,6 +21,8 @@ class LocalMovieRepository {
         screenplay: "Jonathan Nolan",
       ),
       Movie(
+        id: 2,
+
         title: "The Dark Knight",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
@@ -36,6 +39,8 @@ class LocalMovieRepository {
         screenplay: "Jonathan Nolan, Christopher Nolan, David S. Goyer",
       ),
       Movie(
+        id: 3,
+
         title: "Avatar",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",
@@ -52,6 +57,7 @@ class LocalMovieRepository {
         screenplay: "James Cameron",
       ),
       Movie(
+        id: 4,
         title: "Titanic",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg",
@@ -68,6 +74,7 @@ class LocalMovieRepository {
         screenplay: "James Cameron",
       ),
       Movie(
+        id: 5,
         title: "The Matrix",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
@@ -84,6 +91,7 @@ class LocalMovieRepository {
         screenplay: "Lana Wachowski, Lilly Wachowski",
       ),
       Movie(
+        id: 6,
         title: "Joker",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
@@ -100,6 +108,7 @@ class LocalMovieRepository {
         screenplay: "Todd Phillips, Scott Silver",
       ),
       Movie(
+        id: 7,
         title: "Avengers: Endgame",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
@@ -116,6 +125,7 @@ class LocalMovieRepository {
         screenplay: "Christopher Markus, Stephen McFeely",
       ),
       Movie(
+        id: 8,
         title: "Dune",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
@@ -146,6 +156,7 @@ class LocalMovieRepository {
             "A genre-bending social satire that won the Oscar for Best Picture.",
         director: "Bong Joon-ho",
         screenplay: "Bong Joon-ho, Han Jin-won",
+        id: 9,
       ),
 
       Movie(
@@ -162,8 +173,10 @@ class LocalMovieRepository {
         overview: "A masterpiece depicting the rise of a mafia family.",
         director: "Francis Ford Coppola",
         screenplay: "Mario Puzo, Francis Ford Coppola",
+        id: 10,
       ),
       Movie(
+        id: 11,
         title: "Fight Club",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
@@ -180,6 +193,7 @@ class LocalMovieRepository {
       ),
 
       Movie(
+        id: 12,
         title: "The Green Mile",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg",
@@ -195,6 +209,7 @@ class LocalMovieRepository {
         screenplay: "Frank Darabont",
       ),
       Movie(
+        id: 13,
         title: "Schindler's List",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/c8Ass7acuOe4za6DhSattE359gr.jpg",
@@ -210,6 +225,7 @@ class LocalMovieRepository {
         screenplay: "Steven Zaillian",
       ),
       Movie(
+        id: 14,
         title: "The Shawshank Redemption",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
@@ -225,6 +241,7 @@ class LocalMovieRepository {
         screenplay: "Frank Darabont",
       ),
       Movie(
+        id: 15,
         title: "Gladiator",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg",
@@ -240,6 +257,7 @@ class LocalMovieRepository {
         screenplay: "David Franzoni, John Logan, William Nicholson",
       ),
       Movie(
+        id: 16,
         title: "The Matrix",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
@@ -255,6 +273,7 @@ class LocalMovieRepository {
         screenplay: "Lana Wachowski, Lilly Wachowski",
       ),
       Movie(
+        id: 17,
         title: "The Silence of the Lambs",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg",
@@ -271,6 +290,7 @@ class LocalMovieRepository {
       ),
 
       Movie(
+        id: 18,
         title: "Spider-Man: Across the Spider-Verse",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
@@ -287,6 +307,7 @@ class LocalMovieRepository {
         screenplay: "Phil Lord, Christopher Miller, Dave Callaham",
       ),
       Movie(
+        id: 19,
         title: "The Whale",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/jQ0gylJMxWSL490sy0RrPj1Lj7e.jpg",
@@ -304,6 +325,7 @@ class LocalMovieRepository {
       ),
 
       Movie(
+        id: 20,
         title: "Nope",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/AcKVlWaNVVVFQwro3nLXqPljcYA.jpg",
@@ -320,6 +342,7 @@ class LocalMovieRepository {
         screenplay: "Jordan Peele",
       ),
       Movie(
+        id: 21,
         title: "Barbie",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
@@ -336,6 +359,7 @@ class LocalMovieRepository {
         screenplay: "Greta Gerwig, Noah Baumbach",
       ),
       Movie(
+        id: 22,
         title: "The Batman",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg",
@@ -351,6 +375,7 @@ class LocalMovieRepository {
         screenplay: "Matt Reeves, Peter Craig",
       ),
       Movie(
+        id: 23,
         title: "Dungeons & Dragons: Honor Among Thieves",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/v7UF7ypAqjsFZFdjksjQ7IUpXdn.jpg",
@@ -367,6 +392,7 @@ class LocalMovieRepository {
         screenplay: "Jonathan Goldstein, John Francis Daley, Michael Gilio",
       ),
       Movie(
+        id: 24,
         title: "Mission: Impossible – Dead Reckoning Part One",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
@@ -383,6 +409,7 @@ class LocalMovieRepository {
         screenplay: "Christopher McQuarrie, Erik Jendresen",
       ),
       Movie(
+        id: 25,
         title: "Black Panther: Wakanda Forever",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/ps2oKfhY6DL3alynlSqY97gHSsg.jpg",
@@ -399,6 +426,7 @@ class LocalMovieRepository {
         screenplay: "Ryan Coogler, Joe Robert Cole",
       ),
       Movie(
+        id: 26,
         title: "La La Land",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg",
@@ -414,6 +442,7 @@ class LocalMovieRepository {
         screenplay: "Damien Chazelle",
       ),
       Movie(
+        id: 27,
         title: "The Notebook",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/rNzQyW4f8B8cQeg7Dgj3n6eT5k9.jpg",
@@ -430,6 +459,7 @@ class LocalMovieRepository {
       ),
 
       Movie(
+        id: 28,
         title: "A Star is Born",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/wrFpXMNBRj2PBiN4Z5kix51XaIZ.jpg",
@@ -446,6 +476,7 @@ class LocalMovieRepository {
       ),
 
       Movie(
+        id: 29,
         title: "To All the Boys I've Loved Before",
         posterUrl:
             "https://image.tmdb.org/t/p/w500/hKHZhUbIyUAjcSrqJThFGYIR6kI.jpg",

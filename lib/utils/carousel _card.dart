@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_listing_app/model/movie.dart';
@@ -7,10 +9,10 @@ class MovieCarousel extends StatelessWidget {
   final Function(Movie) onMovieTap;
 
   const MovieCarousel({
-    Key? key,
+    super.key,
     required this.movies,
     required this.onMovieTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

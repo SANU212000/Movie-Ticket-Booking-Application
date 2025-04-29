@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:movie_listing_app/provider/movie_provider.dart';
 import 'package:movie_listing_app/provider/seat_provider.dart';
-import 'package:movie_listing_app/screens/movie_listing_screen.dart';
-import 'package:movie_listing_app/screens/intro_screen.dart';
+import 'package:movie_listing_app/services/route.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -26,13 +25,15 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Movie Booking App',
       theme: ThemeData(useMaterial3: true),
-      home: SplashScreen(),
     );
   }
 }

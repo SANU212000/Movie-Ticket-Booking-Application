@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Movie {
   final String title;
   final String posterUrl;
@@ -10,6 +11,7 @@ class Movie {
   final String overview;
   final String director;
   final String screenplay;
+  final int id;
 
   Movie({
     required this.title,
@@ -23,5 +25,6 @@ class Movie {
     required this.overview,
     required this.director,
     required this.screenplay,
+    required this.id,
   });
 }

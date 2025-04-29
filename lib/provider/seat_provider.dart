@@ -6,7 +6,7 @@ class SeatProvider extends ChangeNotifier {
   final int cols = 8;
   late Box _bookedSeatsBox;
   final Set<String> _selectedSeats = {};
-  String _currentMovie = "";
+  String _currentMovieId = "";
   String _currentShowTime = "";
 
   SeatProvider() {
@@ -15,24 +15,24 @@ class SeatProvider extends ChangeNotifier {
 
   Set<String> get selectedSeats => _selectedSeats;
   String get currentShowTime => _currentShowTime;
-  String get currentMovie => _currentMovie;
+  String get currentMovieId => _currentMovieId;
 
-  Set<String> getBookedSeats(String movie, String showTime) {
-    String key = "$movie-$showTime";
+  Set<String> getBookedSeats(String movieId, String showTime) {
+    String key = "$movieId-$showTime";
     return (_bookedSeatsBox.get(key, defaultValue: <String>[]) as List<dynamic>)
         .map((seat) => seat.toString())
         .toSet();
   }
 
-  void setMovieAndShowTime(String movie, String showTime) {
-    _currentMovie = movie;
+  void setMovieAndShowTime(String movieId, String showTime) {
+    _currentMovieId = movieId;
     _currentShowTime = showTime;
     _selectedSeats.clear();
     notifyListeners();
   }
 
   void toggleSeat(String seat) {
-    Set<String> bookedSeats = getBookedSeats(_currentMovie, _currentShowTime);
+    Set<String> bookedSeats = getBookedSeats(_currentMovieId, _currentShowTime);
 
     if (bookedSeats.contains(seat)) return;
 
@@ -45,10 +45,10 @@ class SeatProvider extends ChangeNotifier {
   }
 
   Future<void> confirmBooking() async {
-    String key = "$_currentMovie-$_currentShowTime";
-    Set<String> bookedSeats = getBookedSeats(_currentMovie, _currentShowTime);
+    String key = "$_currentMovieId-$_currentShowTime";
+    Set<String> bookedSeats = getBookedSeats(_currentMovieId, _currentShowTime);
     bookedSeats.addAll(_selectedSeats);
-    _bookedSeatsBox.put(key, bookedSeats.toList());
+    await _bookedSeatsBox.put(key, bookedSeats.toList());
     _selectedSeats.clear();
     notifyListeners();
   }
