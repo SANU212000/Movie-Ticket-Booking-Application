@@ -12,6 +12,7 @@ void main() async {
   final appDocumentDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDocumentDir.path);
   await Hive.openBox('bookedSeatsBox');
+  
 
   runApp(
     MultiProvider(
